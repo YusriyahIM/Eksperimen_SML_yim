@@ -50,7 +50,7 @@ def preprocessing_pipeline(csv_path):
             scaler.fit(df[[feature]])
             df[feature] = scaler.transform(df[[feature]])
             df_test[feature] = scaler.transform(df_test[[feature]])
-            joblib.dump(scaler, f"preprocessing/model/scaler_{feature}.joblib")
+            joblib.dump(scaler, f"Eksperimen_SML_yim/preprocessing/model/scaler_{feature}.joblib")
         return df, df_test
 
     X_train, X_test = scaling(numerical_columns, X_train, X_test)
@@ -64,8 +64,9 @@ def preprocessing_pipeline(csv_path):
             encoder.fit(df[feature])
             df[feature] = encoder.transform(df[feature])
             df_test[feature] = encoder.transform(df_test[feature])
-            joblib.dump(encoder, f"preprocessing/model/encoder_{feature}.joblib")
+            joblib.dump(encoder, f"Eksperimen_SML_yim/preprocessing/model/encoder_{feature}.joblib")
         return df, df_test
+    
 
     X_train, X_test = encoding(categorical_columns, X_train, X_test)
 
@@ -74,7 +75,7 @@ def preprocessing_pipeline(csv_path):
     target_encoder.fit(y_train)
     y_train_enc = target_encoder.transform(y_train)
     y_test_enc = target_encoder.transform(y_test)
-    joblib.dump(target_encoder, "preprocessing/model/encoder_target.joblib")
+    joblib.dump(target_encoder, "Eksperimen_SML_yim/preprocessing/model/encoder_target.joblib")
 
     # 6. PCA Reduction
     pca_numerical_columns_1 = [
@@ -90,7 +91,7 @@ def preprocessing_pipeline(csv_path):
     # PCA pertama
     pca_1 = PCA(n_components=5, random_state=123)
     pca_1.fit(X_train[pca_numerical_columns_1])
-    joblib.dump(pca_1, "preprocessing/model/pca_1.joblib")
+    joblib.dump(pca_1, "Eksperimen_SML_yim/preprocessing/model/pca_1.joblib")
     X_train_pca_1 = pca_1.transform(X_train[pca_numerical_columns_1])
     X_test_pca_1 = pca_1.transform(X_test[pca_numerical_columns_1])
 
@@ -104,7 +105,7 @@ def preprocessing_pipeline(csv_path):
     # PCA kedua
     pca_2 = PCA(n_components=2, random_state=123)
     pca_2.fit(X_train[pca_numerical_columns_2])
-    joblib.dump(pca_2, "preprocessing/model/pca_2.joblib")
+    joblib.dump(pca_2, "Eksperimen_SML_yim/preprocessing/model/pca_2.joblib")
     X_train_pca_2 = pca_2.transform(X_train[pca_numerical_columns_2])
     X_test_pca_2 = pca_2.transform(X_test[pca_numerical_columns_2])
 
@@ -120,7 +121,7 @@ def preprocessing_pipeline(csv_path):
     test_final = pd.concat([X_test, pd.Series(y_test_enc, name='Credit_Score')], axis=1)
 
     return train_final, test_final
-file_path = f'./train_cleaned.csv'
+file_path = f'Eksperimen_SML_yim/train_cleaned.csv'
 train_final, test_final = preprocessing_pipeline(file_path)
 train_final.to_csv("train_pca.csv", index=False)
 test_final.to_csv("test_pca.csv", index=False)

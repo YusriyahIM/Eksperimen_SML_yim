@@ -2,11 +2,18 @@ name: Automated Preprocessing
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
+    paths:
+      - 'Ekperimen_SML_yim/dataset/cs-training.csv'
+      - 'Ekperimen_SML_yim/dataset/cs-test.csv'
+      - 'Ekperimen_SML_yim/preprocessing/**'
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
+    paths:
+      - 'Ekperimen_SML_yim/dataset/cs-training.csv'
+      - 'Ekperimen_SML_yim/dataset/cs-test.csv'
+      - 'Ekperimen_SML_yim/preprocessing/**'
+  workflow_dispatch:
 
 jobs:
   preprocess-data:
